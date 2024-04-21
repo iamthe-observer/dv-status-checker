@@ -30,23 +30,18 @@ import Fill from './fill.vue'
 import Result from './result.vue'
 import Start from './start.vue'
 
+chrome.runtime.onMessage.addListener((message) => {
+  const receivedData = message;
+  console.log('Received data:', receivedData);
+  // Handle the received data as needed within your Vue component
+});
+
 const which_page = ref(0)
-
-onMounted(() => {
-  chrome.runtime.onMessage.addListener((message) => {
-    console.log('hello');
-
-    if (message.type === "page") {
-      which_page.value = message.value
-    }
-  })
-})
 
 const page = computed(() => {
   if (which_page.value == 0) return Start
   if (which_page.value == 1) return Fill
   if (which_page.value == 2) return Result
 })
-
 
 </script>

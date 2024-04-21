@@ -1,18 +1,19 @@
 // import { Applicant } from '@/interfaces/int'
 import './index.scss'
 import gsap from 'gsap'
+import { useAppStore } from './../stores/app.store'
 // import supabase from '@/supabase/supabase'
 
 const src = chrome.runtime.getURL('src/content-script/iframe/index.html')
 const start = useStorage('start', false)
 
-const iframe = new DOMParser().parseFromString(
+const iframe: HTMLIFrameElement = new DOMParser().parseFromString(
   `<div class="iframe-container">
   <span class="toggle">Checker</span>
   <iframe class="crx-iframe" id="contentframe" src="${src}"></iframe>
   </div>`,
   'text/html'
-).body.firstElementChild
+).body.firstElementChild as HTMLIFrameElement
 
 const $ = document.querySelector<HTMLBodyElement>('#escbodytag')
 
@@ -104,10 +105,7 @@ function init() {
   const page = getPage()
   console.log(page)
 
-  chrome.runtime.sendMessage({
-    type: 'page',
-    value: page,
-  })
+  chrome.runtime.sendMessage({ type: 'page', value: '0' })
 }
 
 init()

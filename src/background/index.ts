@@ -27,7 +27,6 @@ self.onerror = function (message, source, lineno, colno, error) {
 }
 
 chrome.runtime.onMessage.addListener((message) => {
-  console.log(message)
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, message)
   })
