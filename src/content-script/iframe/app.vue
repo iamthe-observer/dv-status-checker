@@ -1,21 +1,18 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import supabase from '~/supabase/supabase';
+
+const appData = ref()
+
+// onMounted(async () => {
+//   const { data } = await supabase.from('applicants').select('*')
+//   appData.value = data
+// })
+
+provide('appData', appData)
+</script>
 
 <template>
-  <header
-    aria-label="Site Header"
-    class="bg-gray-50"
-  >
-    Content Script Iframe Header
-  </header>
-
   <RouterView></RouterView>
-
-  <footer
-    aria-label="Site Footer"
-    class="bg-gray-50"
-  >
-    Content Script Iframe Footer
-  </footer>
 </template>
 
 <style scoped></style>

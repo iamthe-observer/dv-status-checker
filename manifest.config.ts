@@ -28,12 +28,17 @@ export default defineManifest(async (env) => ({
     {
       all_frames: false,
       js: ['src/content-script/index.ts'],
-      matches: ['*://*/*'],
+      matches: ['https://dvprogram.state.gov/ESC/*'],
       run_at: 'document_end',
     },
   ],
   host_permissions: ['*://*/*'],
   options_page: 'src/options/index.html',
   permissions: ['storage'],
-  web_accessible_resources: [],
+  web_accessible_resources: [
+    {
+      resources: ['src/content-script/iframe/index.html'],
+      matches: ['<all_urls>'],
+    },
+  ],
 }))

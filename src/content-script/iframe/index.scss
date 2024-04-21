@@ -1,6 +1,17 @@
 // @config "./tailwind.config.cjs"; // To isolate the styles of the source website and chrome plugin
-@import "../../assets/base";
+@import '../../assets/base';
 
-.body {
+html {
+  @apply w-full h-screen;
+}
+body {
+  @apply w-full h-full;
+  background-color: #efefef;
+  outline: 1px solid rgba(0, 0, 0, 0.2) !important;
+  outline-offset: -1px;
+  border-radius: 10px;
+}
+
+#app {
   @apply w-full h-full;
 }

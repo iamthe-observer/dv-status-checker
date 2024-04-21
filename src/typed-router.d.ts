@@ -41,6 +41,9 @@ declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
     '/common/about': RouteRecordInfo<'/common/about', '/common/about', Record<never, never>, Record<never, never>>,
     '/iframe/': RouteRecordInfo<'/iframe/', '/iframe', Record<never, never>, Record<never, never>>,
+    '/iframe/fill': RouteRecordInfo<'/iframe/fill', '/iframe/fill', Record<never, never>, Record<never, never>>,
+    '/iframe/result': RouteRecordInfo<'/iframe/result', '/iframe/result', Record<never, never>, Record<never, never>>,
+    '/iframe/start': RouteRecordInfo<'/iframe/start', '/iframe/start', Record<never, never>, Record<never, never>>,
     '/options/': RouteRecordInfo<'/options/', '/options', Record<never, never>, Record<never, never>>,
     '/popup/': RouteRecordInfo<'/popup/', '/popup', Record<never, never>, Record<never, never>>,
     '/setup/': RouteRecordInfo<'/setup/', '/setup', Record<never, never>, Record<never, never>>,

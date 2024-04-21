@@ -109,10 +109,10 @@ export default defineConfig({
     },
   },
   server: {
-    port: 8888,
+    port: 3000,
     strictPort: true,
     hmr: {
-      port: 8889,
+      port: 8880,
       overlay: true,
     },
   },

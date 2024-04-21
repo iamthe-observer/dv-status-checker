@@ -1,9 +1,38 @@
 .crx-iframe {
-  margin-left: 8px;
-  width: calc(100% - 8px);
-  height: auto;
+  width: 200px;
+  min-height: 280px;
+  display: block;
+  border-radius: 10px;
+  margin: 0px 5px;
+  height: 100px;
   border: none;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
   background-color: #fff;
+}
+
+.toggle {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: orange;
+  width: fit;
+  height: fit;
+  font-weight: bold;
+  text-align: right;
+  text-shadow: 1px 1px 2px black;
+}
+.toggle:hover {
+  color: white;
+}
+
+.iframe-container {
+  display: flex;
+  flex-direction: column;
+  width: fit;
+  height: fit;
+  position: fixed;
+  z-index: 10;
+  opacity: 1;
+  top: 0;
+  right: 0;
 }
