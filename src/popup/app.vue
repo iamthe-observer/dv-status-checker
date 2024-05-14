@@ -1,41 +1,70 @@
 <script setup lang="ts">
+import { Applicant } from '@/interfaces/int';
 import { useAppStore } from '@/stores/app.store';
+import supabase from '@/supabase/supabase';
 
 // const data1 = ref()
 
-onMounted(() => {
+onMounted(async () => {
   useAppStore().$patch({
     loading: false
   })
+
+  await getWinners()
 })
 
-// onMounted(async () => {
-//   const { count: apl } = await supabase
-//     .from('applicants')
-//     .select('*', { count: 'exact' })
-//   // data1.value = data
+const winners = ref<Applicant[]>([])
+async function getWinners() {
+  try {
+    const { data, error } = await supabase.from('applicants').select('*').eq('status', true)
+    if (error) {
+      throw error
+    }
 
-//   const { count: _code } = await supabase
-//     .from('applicants')
-//     .select('*', { count: 'exact' })
-//     .eq('pconf_code', '')
-//   // .or('pconf_code', null)
+    winners.value = data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(async () => {
+
+  const { count: apl } = await supabase
+    .from('applicants')
+    .select('*', { count: 'exact' })
+  // data1.value = data
+
+  const { count, error: error2 } = await supabase
+    .from('applicants')
+    .select('*', { count: 'exact' })
+    .eq('checked', 'true')
+  if (error2) {
+    throw error2
+  }
 
 
-//   const { count: code } = await supabase
-//     .from('applicants')
-//     .select('*', { count: 'exact' })
-//     .neq('pconf_code', '')
-//   //   .or('pconf_code', null)
+  //   const { count: _code } = await supabase
+  //     .from('applicants')
+  //     .select('*', { count: 'exact' })
+  //     .eq('pconf_code', '')
+  //   // .or('pconf_code', null)
 
-//   useAppStore().$patch({
-//     apl_count: apl!,
-//     code_count: code!,
-//     _code_count: _code!,
-//     loading: false
-//   })
 
-// })
+  //   const { count: code } = await supabase
+  //     .from('applicants')
+  //     .select('*', { count: 'exact' })
+  //     .neq('pconf_code', '')
+  //   //   .or('pconf_code', null)
+
+  useAppStore().$patch({
+    apl_count: apl!,
+    checked_count: count!,
+    //     code_count: code!,
+    //     _code_count: _code!,
+    //     loading: false
+  })
+
+})
 </script>
 
 <template>
@@ -45,7 +74,7 @@ onMounted(() => {
       Check Status
 
       <div class="flex gap-3">
-        <span class="">Wins: 10</span>
+        <span class="">Wins: {{ winners ? winners.length : 0 }}</span>
         <!-- <span class="">Losses: 200</span> -->
       </div>
     </header>

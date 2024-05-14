@@ -8,11 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Changelog: typeof import('./components/Changelog.vue')['default']
+    Fill: typeof import('./components/fill.vue')['default']
     Loading: typeof import('./components/Loading.vue')['default']
+    Result: typeof import('./components/result.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Search: typeof import('./components/Search.vue')['default']
     SkipLoader: typeof import('./components/SkipLoader.vue')['default']
+    Start: typeof import('./components/start.vue')['default']
     Steps: typeof import('./components/Steps.vue')['default']
   }
 }

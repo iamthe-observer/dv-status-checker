@@ -1,35 +1,48 @@
 <script setup lang="ts">
-const displayName = __DISPLAY_NAME__
-const version = __VERSION__
+import { Applicant } from '@/interfaces/int';
+import supabase from '@/supabase/supabase';
+// const displayName = __DISPLAY_NAME__
+// const version = __VERSION__
+
+const winners = ref<Applicant[]>([])
+
+async function getWinners() {
+  try {
+    const { data, error } = await supabase.from('applicants').select('*').eq('status', true)
+    if (error) {
+      throw error
+    }
+    winners.value = data
+  } catch (error) {
+    alert(error)
+  }
+}
+
+function copyToClipboard(apl: Applicant) {
+  navigator.clipboard.writeText(apl.fullName + ' ' + apl.pcontact);
+  alert('copied to clipboard')
+}
+
+onMounted(async () => {
+  await getWinners()
+})
 </script>
 
 <template>
-  <div>
-    <div
-      class="flex flex-col gap-y-4"
-      style="grid-area: title"
-    >
-      <h1 class="text-4xl font-bold text-center">🎉 Updated! 🎉</h1>
-      <p class="text-lg">
-        {{ displayName }} has been updated to the latest version. 🎉
-      </p>
-      <p class="text-lg">Version: {{ version }}</p>
+  <div class="flex flex-col gap-4 items-center">
+    <h1 class="uppercase font-extrabold text-4xl">Winners</h1>
 
-      <h1 class="text-2xl font-bold">What's new?</h1>
+    <div class="flex flex-col gap-2">
+
+      <div class="flex gap-5" v-for="winner in winners" :key="winner.apl_id">
+        <span class="">
+          {{ winner.fullName }}
+        </span>
+        <span @click="copyToClipboard(winner)" class="hover:text-blue-500 cursor-pointer">
+          {{ winner.pcontact }}
+        </span>
+      </div>
+
     </div>
-
-    <Changelog />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.update-grid {
-  grid-template-areas:
-    '. . .'
-    '. title .'
-    '. . .'
-    '. content .';
-  grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-</style>

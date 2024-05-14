@@ -114,7 +114,7 @@ function nextStep() {
 }
 
 .circle {
-	background: radial-gradient(circle at 8.33px 8.33px, #ff8657, #6b2407, #ff5512);
+	background: radial-gradient(circle at 8.33px 8.33px, #6fa8f7, #022d69, #0060e6);
 	box-shadow: 91px 66px 79px -24px rgba(0, 0, 0, 0.75);
 	-webkit-box-shadow: 91px 66px 79px -24px rgba(0, 0, 0, 0.75);
 	-moz-box-shadow: 91px 66px 79px -24px rgba(0, 0, 0, 0.75);
@@ -122,6 +122,6 @@ function nextStep() {
 
 .doneP,
 .doneP::before {
-	@apply bg-orange-200 text-black;
+	@apply bg-blue-200 text-black;
 }
 </style>

@@ -8,7 +8,7 @@ export const useAppStore = defineStore('app', () => {
   const code_count = useStorage<number>('code_count', 0)
   const _code_count = useStorage<number>('_code_count', 0)
   const checked_count = useStorage<number>('checked_count', 0)
-  const results = ref<[]>([])
+  const results = ref<Applicant[]>([])
   const check_result = ref(false)
   const state = useStorage('state', 0)
   const start = useStorage('start', false)

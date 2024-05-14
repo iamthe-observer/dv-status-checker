@@ -2,6 +2,7 @@
 import { useAppStore } from '@/stores/app.store'
 import { storeToRefs } from 'pinia';
 import gsap from 'gsap'
+import { Applicant } from '@/interfaces/int';
 
 
 // const version = __VERSION__
@@ -10,7 +11,7 @@ import gsap from 'gsap'
 // const gitCommit = __GIT_COMMIT__
 // const gitCommitURL = `${gitURL}/commit/${gitCommit}`
 
-const { apl_count, code_count, _code_count, results } = storeToRefs(useAppStore())
+const { apl_count, checked_count, results } = storeToRefs(useAppStore())
 const mouse = useMouse()
 const curr_path = ref('')
 function expand() {
@@ -33,7 +34,7 @@ function minimize() {
 
 const cursor_dot = ref<HTMLElement>()
 
-onMounted(() => {
+onMounted(async () => {
   cursor_dot.value!.style.opacity = '0'
   // animate cursor on move
   function animateCursorDot(e: any) {
@@ -45,13 +46,14 @@ onMounted(() => {
   }
 
   document.addEventListener('mousemove', animateCursorDot)
+
 })
 
-function showCursor(path: any[]) {
+function showCursor(path: { primePath: string[] }) {
   cursor_dot.value!.style.opacity = '1'
   cursor_dot.value!.style.scale = '100%'
   curr_path.value = ''
-  curr_path.value = path.primePath[0] ? `https://bwisulfnifauhpelglgh.supabase.co/storage/v1/object/public/applicants/${path.primePath[0]}` : `https://bwisulfnifauhpelglgh.supabase.co/storage/v1/object/public/applicants/avatar.svg`
+  curr_path.value = path.primePath[0] ? `https://wepsovihexcnzicbdmst.supabase.co/storage/v1/object/public/applicants/${path.primePath[0]}` : `https://wepsovihexcnzicbdmst.supabase.co/storage/v1/object/public/EESC/eagle.png`
   // curr_path.value = `https://wepsovihexcnzicbdmst.supabase.co/storage/v1/object/public/applicants/${path.primePath[0]}`
 }
 function hideCursor() {
@@ -64,6 +66,11 @@ const if_load_img = ref(false)
 function toggleLoad() {
   if_load_img.value = true
 }
+
+function fillApplicant(apl: Applicant) {
+  chrome.runtime.sendMessage({ type: 'applicant', value: apl })
+}
+
 </script>
 
 <template>
@@ -72,8 +79,8 @@ function toggleLoad() {
 
     <div class="flex justify-evenly items-center relative h-20 pl-10">
 
-      <div class="w-14 h-16 flex flex-col items-center justify-center apl-container">
-        <span class="apl-info font-bold text-orange-700 py-2 rounded-lg px-4">
+      <div class="w-20 h-16 flex flex-col items-center justify-center apl-container">
+        <span class="apl-info font-bold w-full text-orange-700 py-2 text-center rounded-lg px-4">
           {{ apl_count }}
         </span>
         <span class="">
@@ -81,7 +88,16 @@ function toggleLoad() {
         </span>
       </div>
 
-      <div class="w-14 h-16 flex flex-col items-center justify-center apl-container">
+      <div class="w-20 h-16 flex flex-col items-center justify-center apl-container">
+        <span class="apl-info font-bold w-full text-orange-700 py-2 text-center rounded-lg px-4">
+          {{ checked_count }}
+        </span>
+        <span class="">
+          Checked
+        </span>
+      </div>
+
+      <!-- <div class="w-14 h-16 flex flex-col items-center justify-center apl-container">
         <span class="apl-info font-bold text-orange-700 py-2 rounded-lg px-4">
           {{ code_count }}
         </span>
@@ -97,7 +113,7 @@ function toggleLoad() {
         <span class="">
           No Code
         </span>
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -105,7 +121,8 @@ function toggleLoad() {
   <div class="w-full h-0 bg-black containah overflow-y-auto p-0 flex flex-col">
     <span
       class="w-full border-b border-neutral-200 py-2 hover:bg-orange-800 hover:pl-2 transition-all duration-200 ease-out cursor-pointer rounded-lg hover:text-white"
-      v-for="(result, i) in results" @mouseover="showCursor(result.aplImg_path)" @mouseleave="hideCursor" :key="i">{{
+      v-for="(result, i) in results" @click="fillApplicant(result)" @mouseover="showCursor(result.aplImg_path)"
+      @mouseleave="hideCursor" :key="i">{{
       result.fullName
     }}</span>
   </div>

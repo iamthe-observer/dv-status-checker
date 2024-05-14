@@ -152,7 +152,7 @@ async function getSearch(
 		emit('search')
 		const { data, error } = await supabase
 			.from(table)
-			.select('fullName,aplImg_path,pdob_year,user_id,apl_id,created_at')
+			.select('*')
 			.ilike('fullName', `%${value}%`)
 			.returns<[]>()
 		if (error) throw error
